@@ -14,21 +14,21 @@
       </div>
       <br/>
       <ol>
-        <li v-for="(item, index) of todoList" :key="index">
-          <input class="done-todo" name="done-todo" type="checkbox">
-          <span contenteditable="true">{{ item.content }}</span>
+        <li v-for="(item, index) of filterList" :key="index">
+          <input class="done-todo" name="done-todo" type="checkbox" @change="checkItem(index)">
+          <span :contenteditable="!item.finished" :class="{'checked': item.finished}">{{ item.content }}</span>
         </li>
       </ol>
       <div>
         <ul id="filters">
           <li>
-            <a href="#" data-filter="all">ALL</a>
+            <a href="#" data-filter="all" @click="filterFlag = 0">ALL</a>
           </li>
           <li>
-            <a href="#" data-filter="active">Active</a>
+            <a href="#" data-filter="active" @click="filterFlag = 1">Active</a>
           </li>
           <li>
-            <a href="#" data-filter="complete">Complete</a>
+            <a href="#" data-filter="complete" @click="filterFlag = 2">Complete</a>
           </li>
         </ul>
 
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       field: '',
-      todoList: []
+      todoList: [],
+      filterFlag: 0
     }
   },
   methods: {
@@ -54,7 +55,24 @@ export default {
       this.field = '';
     },
     checkItem(index) {
-
+      this.todoList[index].finished = !this.todoList[index].finished;
+    }
+  },
+  computed: {
+    filterList () {
+      const ALL = 0;
+      const ACTIVE = 1;
+      const COMPLETED = 2;
+      switch (this.filterFlag) {
+        case ALL:
+          return this.todoList;
+        case ACTIVE:
+          return this.todoList.filter(item => !item.finished);
+        case COMPLETED:
+          return this.todoList.filter(item => item.finished);
+        default:
+          return this.todoList;
+      }
     }
   }
 }
