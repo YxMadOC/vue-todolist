@@ -45,17 +45,25 @@ export default {
   data() {
     return {
       field: '',
-      todoList: [],
+      todoList: this.getList(),
       filterFlag: 0
     }
   },
   methods: {
     addItem() {
       this.todoList.push({ content: this.field, finished: false });
+      this.saveList();
       this.field = '';
     },
     checkItem(index) {
       this.todoList[index].finished = !this.todoList[index].finished;
+      this.saveList();
+    },
+    saveList() {
+      localStorage.setItem("todoList", JSON.stringify(this.todoList));
+    },
+    getList() {
+      return JSON.parse(localStorage.getItem("todoList")) || [];
     }
   },
   computed: {
