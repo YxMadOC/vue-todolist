@@ -22,13 +22,13 @@
       <div>
         <ul id="filters">
           <li>
-            <a href="#" data-filter="all" @click="filterFlag = 0">ALL</a>
+            <a href="#" data-filter="all" @click="filterFlag = 0" :class="{'selected': filterFlag === 0}">ALL</a>
           </li>
           <li>
-            <a href="#" data-filter="active" @click="filterFlag = 1">Active</a>
+            <a href="#" data-filter="active" @click="filterFlag = 1" :class="{'selected': filterFlag === 1}">Active</a>
           </li>
           <li>
-            <a href="#" data-filter="complete" @click="filterFlag = 2">Complete</a>
+            <a href="#" data-filter="complete" @click="filterFlag = 2" :class="{'selected': filterFlag === 2}">Complete</a>
           </li>
         </ul>
 
