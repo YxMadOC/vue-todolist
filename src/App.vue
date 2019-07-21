@@ -16,19 +16,19 @@
       <ol>
         <li v-for="(item, index) of filterList" :key="index">
           <input class="done-todo" name="done-todo" type="checkbox" @change="checkItem(index)">
-          <span :contenteditable="!item.finished" :class="{'checked': item.finished}">{{ item.content }}</span>
+          <span :class="{'checked': item.finished}">{{ item.content }}</span>
         </li>
       </ol>
       <div>
         <ul id="filters">
           <li>
-            <a href="#" data-filter="all" @click="filterFlag = 0" :class="{'selected': filterFlag === 0}">ALL</a>
+            <a href="#" data-filter="all" @click="filterFlag = 'ALL'" :class="{'selected': filterFlag === 'ALL'}">ALL</a>
           </li>
           <li>
-            <a href="#" data-filter="active" @click="filterFlag = 1" :class="{'selected': filterFlag === 1}">Active</a>
+            <a href="#" data-filter="active" @click="filterFlag = 'ACTIVE'" :class="{'selected': filterFlag === 'ACTIVE'}">Active</a>
           </li>
           <li>
-            <a href="#" data-filter="complete" @click="filterFlag = 2" :class="{'selected': filterFlag === 2}">Complete</a>
+            <a href="#" data-filter="complete" @click="filterFlag = 'COMPLETED'" :class="{'selected': filterFlag === 'COMPLETED'}">Complete</a>
           </li>
         </ul>
 
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import status from './enums/enums.js'
 
 export default {
   name: 'app',
@@ -68,15 +69,12 @@ export default {
   },
   computed: {
     filterList () {
-      const ALL = 0;
-      const ACTIVE = 1;
-      const COMPLETED = 2;
       switch (this.filterFlag) {
-        case ALL:
+        case status.ALL:
           return this.todoList;
-        case ACTIVE:
+        case status.ACTIVE:
           return this.todoList.filter(item => !item.finished);
-        case COMPLETED:
+        case status.COMPLETED:
           return this.todoList.filter(item => item.finished);
         default:
           return this.todoList;
