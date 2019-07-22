@@ -18,9 +18,9 @@
 
 export default {
     name: 'ListHeader',
-    data() {
-        return {
-            field: ''
+    props: {
+        field: {
+            default: ''
         }
     },
     methods: {

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="container">
-      <ListHeader @change="(val) => addItem(val)"/>
+      <ListHeader :field="field" @change="(val) => addItem(val)"/>
       <br/>
-      <List :items="filterList" @change="checkItem"/>
+      <List :items="filterList" @change="checkItem" @modified="(index, val) => modified(index, val)"/>
       <ListFilter :filterFlag="filterFlag" @change="(val) => this.filterFlag = val"/>
     </div>
   </div>
@@ -20,6 +20,7 @@ export default {
   components: {ListHeader, List, ListFilter},
   data() {
     return {
+      field: '',
       todoList: this.getList(),
       filterFlag: 'ALL'
     }
@@ -37,6 +38,10 @@ export default {
     },
     getList() {
       return JSON.parse(localStorage.getItem("todoList")) || [];
+    },
+    modified(index, val) {
+      this.todoList[index].content = val;
+      this.saveList();
     }
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
     <ol>
-        <ListItem v-for="(item, index) of items" :item="item" :key="index" @change="emitChange"/>
+        <ListItem v-for="(item, index) of items" :item="item" :key="index" @change="emitChange" @modified="(val) => emitModify(index, val)"/>
     </ol>
 </template>
 
@@ -18,6 +18,9 @@
         methods: {
             emitChange() {
                 this.$emit("change");
+            },
+            emitModify(index, val) {
+                this.$emit("modified", index, val);
             }
         }
     }
