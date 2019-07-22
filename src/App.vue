@@ -1,63 +1,35 @@
 <template>
   <div id="app">
     <div class="container">
-      <div>
-        <h2>Jquery To Do List</h2>
-        <p>
-          <em>Simple Todo List with adding and filter by diff status.</em>
-        </p>
-      </div>
-      <div>
-        <input v-model="field" class="input-text" type="text" name="ListItem" />
-        &nbsp;
-        <div id="button" @click="addItem">Add</div>
-      </div>
+      <ListHeader @change="(val) => addItem(val)"/>
       <br/>
-      <ol>
-        <li v-for="(item, index) of filterList" :key="index">
-          <input class="done-todo" name="done-todo" type="checkbox" @change="checkItem(index)">
-          <span :class="{'checked': item.finished}">{{ item.content }}</span>
-        </li>
-      </ol>
-      <div>
-        <ul id="filters">
-          <li>
-            <a href="#" data-filter="all" @click="filterFlag = 'ALL'" :class="{'selected': filterFlag === 'ALL'}">ALL</a>
-          </li>
-          <li>
-            <a href="#" data-filter="active" @click="filterFlag = 'ACTIVE'" :class="{'selected': filterFlag === 'ACTIVE'}">Active</a>
-          </li>
-          <li>
-            <a href="#" data-filter="complete" @click="filterFlag = 'COMPLETED'" :class="{'selected': filterFlag === 'COMPLETED'}">Complete</a>
-          </li>
-        </ul>
-
-      </div>
-
+      <List :items="filterList" @change="checkItem"/>
+      <ListFilter :filterFlag="filterFlag" @change="(val) => this.filterFlag = val"/>
     </div>
   </div>
 </template>
 
 <script>
 import status from './enums/enums.js'
+import ListHeader from './components/ListHeader'
+import List from './components/List'
+import ListFilter from './components/ListFilter'
 
 export default {
   name: 'app',
+  components: {ListHeader, List, ListFilter},
   data() {
     return {
-      field: '',
       todoList: this.getList(),
-      filterFlag: 0
+      filterFlag: 'ALL'
     }
   },
   methods: {
-    addItem() {
-      this.todoList.push({ content: this.field, finished: false });
+    addItem(val) {
+      this.todoList.push({ content: val, finished: false });
       this.saveList();
-      this.field = '';
     },
-    checkItem(index) {
-      this.todoList[index].finished = !this.todoList[index].finished;
+    checkItem() {
       this.saveList();
     },
     saveList() {
