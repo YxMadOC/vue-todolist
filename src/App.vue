@@ -3,7 +3,7 @@
     <div class="container">
       <ListHeader :field="field" @change="(val) => addItem(val)"/>
       <br/>
-      <List :items="filterList" @change="checkItem" @modified="(id, val) => modified(id, val)"/>
+      <List :items="filterList"/>
       <ListFilter :filterFlag="filterFlag" @change="(val) => this.filterFlag = val"/>
     </div>
   </div>
@@ -15,7 +15,6 @@ import status from './enums/enums.js'
 import ListHeader from './components/ListHeader'
 import List from './components/List'
 import ListFilter from './components/ListFilter'
-import uuid from 'uuid/v1'
 
 export default {
   name: 'app',
@@ -23,27 +22,8 @@ export default {
   data() {
     return {
       field: '',
-      todoList: this.getList(),
+      todoList: this.$store.getters.todoList,
       filterFlag: 'ALL'
-    }
-  },
-  methods: {
-    addItem(val) {
-      this.todoList.push({ id: uuid(), content: val, finished: false });
-      this.saveList();
-    },
-    checkItem() {
-      this.saveList();
-    },
-    saveList() {
-      localStorage.setItem("todoList", JSON.stringify(this.todoList));
-    },
-    getList() {
-      return JSON.parse(localStorage.getItem("todoList")) || [];
-    },
-    modified(id, val) {
-      this.todoList.find((item) => item.id === id).content = val;
-      this.saveList();
     }
   },
   computed: {

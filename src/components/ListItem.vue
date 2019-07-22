@@ -13,7 +13,7 @@
         },
         methods: {
             emitChange() {
-                this.$emit("change");
+                this.$emit("change", this.item.finished)
             },
             emitModify(e) {
                 this.$emit("modified", e.target.innerText);

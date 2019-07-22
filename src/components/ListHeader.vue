@@ -9,23 +9,27 @@
         <div>
             <input v-model="field" class="input-text" type="text" name="ListItem" />
             &nbsp;
-            <div id="button" @click="emitChange">Add</div>
+            <div id="button" @click="addItem">Add</div>
         </div>
     </div>
 </template>
 
 <script>
 
+import uuid from 'uuid/v1'
+
 export default {
     name: 'ListHeader',
-    props: {
-        field: {
-            default: ''
+    data() {
+        return {
+            field: ''
         }
     },
     methods: {
-        emitChange() {
-            this.$emit("change", this.field);
+        addItem() {
+            this.$store.commit('addItem', {
+                item: { id: uuid(), content: this.field, finished: false }
+            });
             this.field = '';
         }
     }
