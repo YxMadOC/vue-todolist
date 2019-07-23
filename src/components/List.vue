@@ -1,6 +1,6 @@
 <template>
     <ol>
-        <ListItem v-for="item of items" :item="item" :key="item.id" @change="(status) => emitChange(item.id, status)" @modified="(val) => emitModify(item.id, val)"/>
+        <ListItem v-for="item of items" :item="item" :key="item.id" @change="(status) => handleChange(item.id, status)" @modified="(val) => handleModify(item.id, val)"/>
     </ol>
 </template>
 
@@ -16,13 +16,13 @@
             }
         },
         methods: {
-            emitChange(id, status) {
+            handleChange(id, status) {
                 this.$store.commit("checkItem", {
                     id: id,
                     status: status
                 })
             },
-            emitModify(id, val) {
+            handleModify(id, val) {
                 this.$store.commit("modifyItem", {
                     id: id,
                     val: val

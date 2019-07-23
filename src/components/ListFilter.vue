@@ -2,29 +2,27 @@
     <div>
         <ul id="filters">
             <li>
-                <a href="#" data-filter="all" @click="emitChange('ALL')" :class="{'selected': filterFlag === 'ALL'}">ALL</a>
+                <a href="#" data-filter="all" @click="changeFilter('ALL')" :class="{'selected': $store.getters.status === 'ALL'}">ALL</a>
             </li>
             <li>
-                <a href="#" data-filter="active" @click="emitChange('ACTIVE')" :class="{'selected': filterFlag === 'ACTIVE'}">Active</a>
+                <a href="#" data-filter="active" @click="changeFilter('ACTIVE')" :class="{'selected': $store.getters.status === 'ACTIVE'}">Active</a>
             </li>
             <li>
-                <a href="#" data-filter="complete" @click="emitChange('COMPLETED')" :class="{'selected': filterFlag === 'COMPLETED'}">Complete</a>
+                <a href="#" data-filter="complete" @click="changeFilter('COMPLETED')" :class="{'selected': $store.getters.status === 'COMPLETED'}">Complete</a>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
+
     export default {
         name: "ListFilter",
-        props: {
-            filterFlag: {
-                default: 'ALL'
-            }
-        },
         methods: {
-            emitChange(status) {
-                this.$emit("change", status);
+            changeFilter(status) {
+                this.$store.commit("changeFilter", {
+                    status: status
+                });
             }
         }
     }

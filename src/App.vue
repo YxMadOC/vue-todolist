@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div class="container">
-      <ListHeader :field="field" @change="(val) => addItem(val)"/>
+      <ListHeader />
       <br/>
       <List :items="filterList"/>
-      <ListFilter :filterFlag="filterFlag" @change="(val) => this.filterFlag = val"/>
+      <ListFilter />
     </div>
   </div>
 </template>
@@ -21,14 +21,12 @@ export default {
   components: {ListHeader, List, ListFilter},
   data() {
     return {
-      field: '',
       todoList: this.$store.getters.todoList,
-      filterFlag: 'ALL'
     }
   },
   computed: {
     filterList () {
-      switch (this.filterFlag) {
+      switch (this.$store.getters.status) {
         case status.ALL:
           return this.todoList;
         case status.ACTIVE:

@@ -12,7 +12,8 @@ const saveList = (list) => {
 
 const store = new Vuex.Store({
   state: {
-    todoList: JSON.parse(localStorage.getItem("todoList")) || []
+    todoList: JSON.parse(localStorage.getItem("todoList")) || [],
+    status: 'ALL'
   },
   mutations: {
     addItem(state, payload){
@@ -26,10 +27,14 @@ const store = new Vuex.Store({
     checkItem(state, payload) {
       state.todoList.find(item => item.id === payload.id).status = payload.status;
       saveList(state.todoList)
+    },
+    changeFilter(state, payload) {
+      state.status = payload.status;
     }
   },
   getters: {
     todoList: state => state.todoList,
+    status: state => state.status
   }
 });
 

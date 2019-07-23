@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <h2>Jquery To Do List</h2>
+            <h2>Vue To Do List</h2>
             <p>
                 <em>Simple Todo List with adding and filter by diff status.</em>
             </p>

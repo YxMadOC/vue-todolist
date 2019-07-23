@@ -1,7 +1,7 @@
 <template>
     <li>
-        <input class="done-todo" name="done-todo" type="checkbox" v-model="item.finished" @change="emitChange">
-        <span contenteditable="true" @blur="emitModify" :class="{'checked': item.finished}">{{ item.content }}</span>
+        <input class="done-todo" name="done-todo" type="checkbox" v-model="item.finished" @change="handleChange">
+        <span contenteditable="true" @blur="handleModify" :class="{'checked': item.finished}">{{ item.content }}</span>
     </li>
 </template>
 
@@ -12,10 +12,10 @@
             item: {}
         },
         methods: {
-            emitChange() {
+            handleChange() {
                 this.$emit("change", this.item.finished)
             },
-            emitModify(e) {
+            handleModify(e) {
                 this.$emit("modified", e.target.innerText);
             }
         }
