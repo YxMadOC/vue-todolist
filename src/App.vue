@@ -11,32 +11,19 @@
 
 <script>
 
-import status from './enums/enums.js'
 import ListHeader from './components/ListHeader'
 import List from './components/List'
 import ListFilter from './components/ListFilter'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'app',
   components: {ListHeader, List, ListFilter},
-  data() {
-    return {
-      todoList: this.$store.getters.todoList,
-    }
-  },
   computed: {
-    filterList () {
-      switch (this.$store.getters.status) {
-        case status.ALL:
-          return this.todoList;
-        case status.ACTIVE:
-          return this.todoList.filter(item => !item.finished);
-        case status.COMPLETED:
-          return this.todoList.filter(item => item.finished);
-        default:
-          return this.todoList;
-      }
-    }
+    ...mapGetters([
+     'filterList'
+    ]),
+
   }
 }
 </script>
