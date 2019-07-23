@@ -11,6 +11,7 @@
 
 <script>
 
+import status from './enums/enums.js'
 import ListHeader from './components/ListHeader'
 import List from './components/List'
 import ListFilter from './components/ListFilter'
@@ -19,11 +20,13 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'app',
   components: {ListHeader, List, ListFilter},
+  mounted() {
+    this.$store.dispatch('loadItem')
+  },
   computed: {
     ...mapGetters([
      'filterList'
     ]),
-
   }
 }
 </script>

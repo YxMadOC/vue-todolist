@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         addItem() {
-            this.$store.commit('addItem', {
+            this.$store.dispatch('addItem', {
                 item: { id: uuid(), content: this.field, finished: false }
             });
             this.field = '';
